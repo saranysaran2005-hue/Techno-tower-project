@@ -1,0 +1,656 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Technofarmers — Smart Farming</title>
+    <link rel="stylesheet" href="styles.css" />
+     <title>Technofarmers — Smart Farm + AI Voice Assistant</title>
+  </head>
+  <style>
+     /* AI assistant area */
+    .ai-assistant-card{max-width:880px; margin:1rem auto; background:linear-gradient(180deg,#fff,#fbffff); padding:1rem; border-radius:12px; box-shadow:0 6px 20px rgba(16,24,40,.06)}
+    .ai-controls{display:flex; gap:.6rem; align-items:center; margin-bottom:.6rem; flex-wrap:wrap}
+    .select, .lang-toggle, .btn-action{padding:.5rem .7rem; border-radius:8px; border:1px solid rgba(0,0,0,.06); background:#fff}
+    #conversation{height:220px; overflow:auto; border-radius:8px; padding:.6rem; background:#f8fafb; margin-bottom:.6rem}
+    .msg{margin:.4rem 0; display:flex; gap:.6rem; align-items:flex-start}
+    .msg.user{justify-content:flex-end}
+    .bubble{max-width:78%; padding:.5rem .7rem; border-radius:10px}
+    .bubble.user{background:#dbeafe; color:#0369a1}
+    .bubble.ai{background:#e6fffb; color:#064e46}
+    .controls-row{display:flex; gap:.5rem; align-items:center}
+    .status{font-size:.85rem; color:var(--muted)}
+
+    /* Small screens */
+    @media (max-width:520px){
+      .container{grid-template-columns:repeat(1,1fr)}
+      nav{overflow:auto}
+    }
+  </style>
+
+  <body>
+    <!-- HOME SECTION -->
+    <div id="sectionHome">
+      <nav>
+        <a href="#" class="active" onclick="showSection('sectionHome', this)">Home</a>
+        <a href="#" onclick="showSection('sectionFavouritePlaces', this)">Dashboard</a>
+        <a href="#" onclick="showSection('sectionSmartcontrol', this)">Smart Controls</a>
+         <a href="#" onclick="showSection('aiAssistantSection', this)">AI Assistant</a>
+      </nav>
+
+      <div class="logo-container">
+        <img
+          src="https://unchanged-sapphire-ldtprwxgrh.edgeone.app/WhatsApp%20Image%202025-11-07%20at%2010.20.49_0c36db74.jpg"
+          alt="Technofarmers Logo"
+        />
+        <h1 class="Techno-Heading">TECHNOFARMERS</h1>
+        <h3>Empowering Farmers with Technology – From Soil to Sale</h3>
+        <p class="description">
+          Revolutionary smart farming platform with AI-powered insights, automated irrigation, and integrated
+          e-commerce. Experience the future of agriculture today! 🌱
+        </p>
+
+        <div class="btn-container">
+          <a href="#" class="btn btn-get">Get Started →</a>
+          <a href="#" class="btn btn-smart" onclick="showSection('sectionSmartcontrol', this)">Smart Controls ⚡</a>
+        </div>
+
+        <h1 class="smart-farm-heaidng">Smart Farming Features</h1>
+        <p class="smart-farm-para">Comprehensive IoT-based agricultural solutions</p>
+
+        <div class="container">
+          <div class="card">
+            <img src="https://via.placeholder.com/64x64?text=Irrigation" alt="Irrigation" />
+            <h3>Smart Irrigation</h3>
+            <p>Automated valve control with soil moisture sensors</p>
+          </div>
+          <div class="card">
+            <img src="https://via.placeholder.com/64x64?text=Soil+Analysis" alt="Soil" />
+            <h3>Soil Analysis</h3>
+            <p>Real-time soil type analysis and pH monitoring</p>
+          </div>
+          <div class="card">
+            <img src="https://via.placeholder.com/64x64?text=Tank" alt="Tank" />
+            <h3>Tank Monitoring</h3>
+            <p>Water tank capacity sensors with alerts</p>
+          </div>
+          <div class="card">
+            <img src="https://via.placeholder.com/64x64?text=Weather" alt="Weather" />
+            <h3>Weather Tracking</h3>
+            <p>Advanced weather monitoring and forecasting</p>
+          </div>
+          <div class="card">
+            <img src="https://via.placeholder.com/64x64?text=Lifecycle" alt="Lifecycle" />
+            <h3>Seed to Sale</h3>
+            <p>Complete crop lifecycle management</p>
+          </div>
+          <div class="card">
+            <img src="https://via.placeholder.com/64x64?text=E-Commerce" alt="E-Commerce" />
+            <h3>E-Commerce</h3>
+            <p>Direct marketplace for farmers to sell products</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="AI-powerd-conatiner">
+        <h1 class="smart-farm-heaidng">AI-Powered Intelligence</h1>
+        <p class="smart-farm-para">Advanced AI assistance with multilingual support and smart notifications</p>
+
+        <div class="container">
+          <div class="card">
+            <img src="https://via.placeholder.com/64x64?text=AI+Irrigation" alt="AI Irrigation" />
+            <h3>Smart Irrigation</h3>
+            <p>Automated valve control with soil moisture sensors</p>
+          </div>
+          <div class="card">
+            <img src="https://via.placeholder.com/64x64?text=AI+Soil" alt="AI Soil" />
+            <h3>Soil Analysis</h3>
+            <p>Real-time soil type analysis and pH monitoring</p>
+          </div>
+          <div class="card">
+            <img src="https://via.placeholder.com/64x64?text=AI+Tank" alt="AI Tank" />
+            <h3>Tank Monitoring</h3>
+            <p>Water tank capacity sensors with alerts</p>
+          </div>
+          <div class="card">
+            <img src="https://via.placeholder.com/64x64?text=AI+Weather" alt="AI Weather" />
+            <h3>Weather Tracking</h3>
+            <p>Advanced weather monitoring and forecasting</p>
+          </div>
+        </div>
+
+        <div class="System-Architecture-container">
+          <h1 class="smart-farm-heaidng">System Architecture</h1>
+          <p class="smart-farm-para">Built on robust IoT infrastructure with real-time monitoring</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD SECTION -->
+    <div id="sectionFavouritePlaces" style="display: none;">
+      <section class="dashboard-header">
+        <h1>Farm Dashboard</h1>
+        <p>Monitor all your land data in real-time</p>
+      </section>
+
+      <section class="weather">
+        <h2>🌤️ Current Weather</h2>
+        <div class="weather-card">
+          <div class="weather-item">
+            <div class="weather-icon">🌡</div>
+            <div>
+              <div class="value">29°C</div>
+              <div class="label">Temperature</div>
+            </div>
+          </div>
+
+          <div class="weather-item">
+            <div class="weather-icon">💧</div>
+            <div>
+              <div class="value">72%</div>
+              <div class="label">Humidity</div>
+            </div>
+          </div>
+
+          <div class="weather-item">
+            <div class="weather-icon">⛅</div>
+            <div>
+              <div class="value">Partly Cloudy</div>
+              <div class="label">Condition</div>
+            </div>
+          </div>
+
+          <div class="weather-item">
+            <div class="weather-icon">↗</div>
+            <div>
+              <div class="value">Light rain expected tomorrow</div>
+              <div class="label">Tomorrow</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="fields">
+        <div class="card optimal">
+          <h3>Field A - North</h3>
+          <p>🌡️ 28°C</p>
+          <p>💧 65% Soil Moisture</p>
+          <p>🧪 pH 6.8</p>
+          <p class="status">Status: <span>Optimal</span></p>
+        </div>
+
+        <div class="card needs-water">
+          <h3>Field B - South</h3>
+          <p>🌡️ 32°C</p>
+          <p>💧 45% Soil Moisture</p>
+          <p>🧪 pH 7.2</p>
+          <p class="status">Status: <span>Needs Water</span></p>
+        </div>
+
+        <div class="card optimal">
+          <h3>Greenhouse 1</h3>
+          <p>🌡️ 25°C</p>
+          <p>💧 78% Soil Moisture</p>
+          <p>🧪 pH 6.5</p>
+          <p class="status">Status: <span>Optimal</span></p>
+        </div>
+      </section>
+
+      <section class="water-tanks">
+        <h2>💧 Water Tank Capacity</h2>
+        <div class="tank">
+          <label>Main Tank</label>
+          <div class="bar"><div style="width:85%"></div></div>
+          <span>85%</span>
+        </div>
+        <div class="tank">
+          <label>Backup Tank</label>
+          <div class="bar"><div style="width:62%"></div></div>
+          <span>62%</span>
+        </div>
+        <div class="tank">
+          <label>Greenhouse Tank</label>
+          <div class="bar"><div style="width:90%"></div></div>
+          <span>90%</span>
+        </div>
+      </section>
+
+      <section class="ai-assistant">
+        <h2>⚡ AI Voice Assistant</h2>
+        <p>Ask me anything about your farm in Tamil!</p>
+        <button id="start-listening">🎙️ Speak</button>
+        <p>You said: <span id="user-speech"></span></p>
+        <p>AI says: <span id="ai-response"></span></p>
+      </section>
+
+      <div class="back-row">
+        <button class="Dashbord-button" onclick="showSection('sectionHome', document.querySelector('nav a'))">
+          Back to Home
+        </button>
+      </div>
+    </div>
+
+    <!-- SMART CONTROLS SECTION -->
+    <div id="sectionSmartcontrol" style="display: none;">
+      <div class="main-content">
+        <div class="section-header">
+          <div>
+            <h1 class="section-title">Smart Controls</h1>
+            <p class="section-subtitle">Automated valve control and weather monitoring</p>
+          </div>
+          <button class="settings-btn">⚙️ System Settings</button>
+        </div>
+
+        <section class="valve-control-section">
+          <h2 class="section-heading">Automated Valve Control</h2>
+          <div class="valve-control-cards">
+            <div class="control-card inactive">
+              <div class="card-header-control">
+                <h3>Field A - North Irrigation</h3>
+                <div class="status-toggle inactive-badge">Inactive</div>
+              </div>
+              <div class="soil-moisture-bar">
+                <p>Soil Moisture</p>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" style="width: 45%;"></div>
+                </div>
+                <span class="percentage">45%</span>
+              </div>
+              <div class="card-details">
+                <p>Flow Rate: <strong>15 L/min</strong></p>
+                <p>Location: North Section</p>
+                <p class="activity">Last Active: 2 hours ago</p>
+              </div>
+              <div class="card-actions">
+                <button class="btn-action">▶️ Start</button>
+                <button class="btn-action">⏹️ Stop</button>
+                <button class="btn-icon">🕒</button>
+              </div>
+            </div>
+
+            <div class="control-card active">
+              <div class="card-header-control">
+                <h3>Field B - South Irrigation</h3>
+                <div class="status-toggle active-badge">Active</div>
+              </div>
+              <div class="soil-moisture-bar">
+                <p>Soil Moisture</p>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" style="width: 72%;"></div>
+                </div>
+                <span class="percentage">72%</span>
+              </div>
+              <div class="card-details">
+                <p>Flow Rate: <strong>18 L/min</strong></p>
+                <p>Location: South Section</p>
+                <p class="activity active-text">Last Active: Currently active</p>
+              </div>
+              <div class="card-actions">
+                <button class="btn-action">▶️ Start</button>
+                <button class="btn-action">⏹️ Stop</button>
+                <button class="btn-icon">🕒</button>
+              </div>
+            </div>
+
+            <div class="control-card inactive">
+              <div class="card-header-control">
+                <h3>Greenhouse Irrigation</h3>
+                <div class="status-toggle inactive-badge">Inactive</div>
+              </div>
+              <div class="soil-moisture-bar">
+                <p>Soil Moisture</p>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" style="width: 68%;"></div>
+                </div>
+                <span class="percentage">68%</span>
+              </div>
+              <div class="card-details">
+                <p>Flow Rate: <strong>8 L/min</strong></p>
+                <p>Location: Greenhouse Zone</p>
+                <p class="activity">Last Active: 30 min ago</p>
+              </div>
+              <div class="card-actions">
+                <button class="btn-action">▶️ Start</button>
+                <button class="btn-action">⏹️ Stop</button>
+                <button class="btn-icon">🕒</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- rest of Smart Controls content (schedule, monitoring, insights) -->
+        <section class="schedule-section">
+          <h2 class="section-heading">Irrigation Schedule</h2>
+          <div class="schedule-content">
+            <p>Daily Irrigation Duration (minutes)</p>
+            <div class="slider-container">
+              <input type="range" min="1" max="120" value="30" class="slider" id="durationSlider" />
+              <div class="slider-labels">
+                <span>1 min</span>
+                <span>30 minutes</span>
+                <span>120 min</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="monitoring-grid">
+          <div class="weather-card">
+            <h2 class="section-heading">Current Weather Conditions</h2>
+            <div class="weather-details">
+              <div class="weather-item">
+                <span class="icon-temp">🌡️</span>
+                <p class="value">29°C</p>
+                <p class="label">Temperature</p>
+              </div>
+              <div class="weather-item">
+                <span class="icon-humidity">💧</span>
+                <p class="value">72%</p>
+                <p class="label">Humidity</p>
+              </div>
+              <div class="weather-item">
+                <span class="icon-wind">💨</span>
+                <p class="value">12 km/h</p>
+                <p class="label">Wind Speed</p>
+              </div>
+              <div class="weather-item">
+                <span class="icon-uv">☀️</span>
+                <p class="value">7</p>
+                <p class="label">UV Index</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cctv-monitoring-section">
+            <h2 class="section-heading">CCTV Monitoring</h2>
+            <div class="cctv-grid">
+              <div class="cctv-card online">
+                <div class="cctv-header">
+                  <p>Field A Overview</p>
+                  <span class="cctv-status online-badge-small">online</span>
+                </div>
+                <div class="camera-placeholder">📷</div>
+                <p class="location-label">North Field</p>
+              </div>
+
+              <div class="cctv-card online">
+                <div class="cctv-header">
+                  <p>Greenhouse Interior</p>
+                  <span class="cctv-status online-badge-small">online</span>
+                </div>
+                <div class="camera-placeholder">📷</div>
+                <p class="location-label">Greenhouse</p>
+              </div>
+
+              <div class="cctv-card offline">
+                <div class="cctv-header">
+                  <p>Storage Area</p>
+                  <span class="cctv-status offline-badge-small">offline</span>
+                </div>
+                <div class="camera-placeholder">📷</div>
+                <p class="location-label">Storage</p>
+              </div>
+
+              <div class="cctv-card online">
+                <div class="cctv-header">
+                  <p>Field B Overview</p>
+                  <span class="cctv-status online-badge-small">online</span>
+                </div>
+                <div class="camera-placeholder">📷</div>
+                <p class="location-label">South Field</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="insights-section">
+          <div class="insight-card crop-health">
+            <h3 class="insight-title">Crop Health</h3>
+            <p>Your crops are showing excellent growth patterns. Continue current irrigation schedule.</p>
+          </div>
+          <div class="insight-card weather-alert">
+            <h3 class="insight-title">Weather Alert</h3>
+            <p>Rain expected tomorrow. <strong>Consider reducing irrigation by 30%.</strong></p>
+          </div>
+          <div class="insight-card ai-recommendation">
+            <h3 class="insight-title">AI Recommendation</h3>
+            <p>Optimal harvest window approaching in <strong>2-3 weeks</strong> based on current growth rate.</p>
+          </div>
+        </section>
+
+        <div class="back-row">
+          <button class="Dashbord-button" onclick="showSection('sectionHome', document.querySelector('nav a'))">
+            Back to Home
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- AI Assistant Section -->
+  <div id="aiAssistantSection" style="display:none; padding:1rem;">
+    <div class="ai-assistant-card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h2>⚡ AI Voice Assistant</h2>
+          <div class="status">Ask about irrigation, soil, weather — in Tamil or English.</div>
+        </div>
+        <div style="display:flex; gap:.5rem; align-items:center;">
+          <label for="useChatGPT" class="status">Use ChatGPT</label>
+          <input id="useChatGPT" type="checkbox" title="If checked, client will call /api/chat on your server to get GPT responses (server required)">
+        </div>
+      </div>
+
+      <div style="margin-top:.8rem" class="ai-controls">
+        <select id="voiceLang" class="select" title="Language for recognition & speech">
+          <option value="ta-IN">Tamil (ta-IN)</option>
+          <option value="en-IN">English (en-IN)</option>
+          <option value="en-US">English (en-US)</option>
+        </select>
+
+        <button id="start-listening" class="btn-action">🎙️ Start Listening</button>
+        <button id="stop-listening" class="btn-action">⏹ Stop</button>
+        <button id="clear-conv" class="btn-action">🧹 Clear</button>
+      </div>
+
+      <div id="conversation" aria-live="polite"></div>
+
+      <div style="display:flex; gap:.5rem; margin-top:.5rem; align-items:center;">
+        <input id="typedInput" placeholder="Type message (or press Enter)..." style="flex:1; padding:.6rem; border-radius:8px; border:1px solid rgba(0,0,0,.06)">
+        <button id="sendText" class="btn-action">Send</button>
+      </div>
+
+      <p style="margin-top:.6rem; color:var(--muted); font-size:.9rem">
+        Note: To enable ChatGPT replies you must implement a secure server endpoint <code>/api/chat</code> that accepts POST JSON { "prompt": "...", "lang": "ta-IN" } and returns JSON { "reply": "..." } — do not put your OpenAI API key in client-side code.
+      </p>
+    </div>
+  </div>
+
+   <script>
+  // ---------- Section switcher ----------
+  function showSection(sectionIdToShow, clickedElement) {
+    ['sectionHome','sectionFavouritePlaces','sectionSmartcontorl','aiAssistantSection'].forEach(id=>{
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.style.display = (id === sectionIdToShow) ? 'block' : 'none';
+    });
+    document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
+    if (clickedElement) clickedElement.classList.add('active');
+  }
+  document.addEventListener('DOMContentLoaded', ()=> showSection('sectionHome', document.querySelector('nav a')));
+
+  // ---------- AI Voice Assistant: recognition + synthesis + optional ChatGPT ----------
+  (function(){
+    // NOTE: changed selection to handle multiple elements with same id (duplicate id issue)
+    const startBtns = Array.from(document.querySelectorAll('#start-listening'));
+    const stopBtn = document.getElementById('stop-listening');
+    const sendTextBtn = document.getElementById('sendText');
+    const clearConvBtn = document.getElementById('clear-conv');
+    const typedInput = document.getElementById('typedInput');
+    const conv = document.getElementById('conversation');
+    const voiceLang = document.getElementById('voiceLang');
+    const useChatGPT = document.getElementById('useChatGPT');
+
+    // Detect browser SpeechRecognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition = null;
+    if (!SpeechRecognition) {
+      // disable all start buttons and inform user
+      startBtns.forEach(b=>b.disabled = true);
+      if (stopBtn) stopBtn.disabled = true;
+      appendSystem('Speech Recognition not supported in this browser. Use Chrome or Edge and serve over HTTPS or localhost.');
+    } else {
+      recognition = new SpeechRecognition();
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      recognition.continuous = false; // single-shot
+    }
+
+    function appendMessage(text, who='ai') {
+      const row = document.createElement('div');
+      row.className = 'msg ' + (who === 'user' ? 'user' : 'ai');
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble ' + (who === 'user' ? 'user' : 'ai');
+      bubble.textContent = text;
+      row.appendChild(bubble);
+      conv.appendChild(row);
+      conv.scrollTop = conv.scrollHeight;
+    }
+    function appendSystem(text){
+      const row = document.createElement('div');
+      row.className = 'msg';
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble ai';
+      bubble.style.opacity = .8;
+      bubble.textContent = text;
+      row.appendChild(bubble);
+      conv.appendChild(row);
+    }
+
+    function speak(text, lang) {
+      if (!text) return;
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = lang || 'ta-IN';
+      window.speechSynthesis.cancel(); // stop previous
+      window.speechSynthesis.speak(u);
+    }
+
+    // Basic offline rule-based assistant (fallback)
+    function localAssistantReply(text, lang) {
+      const t = (text||'').toLowerCase();
+      if (!t) return "என்ன உதவி வேண்டும்? / How can I help?";
+      if (t.includes('irrig') || t.includes('neer') || t.includes('நீர்') ) {
+        return lang && lang.startsWith('ta') ? "நீங்கள் மண்ணின் ஈரப்பதத்தை பரிசோதிக்கவும் மற்றும் பாசனத்தை சரிசெய்க." : "Check soil moisture and adjust irrigation accordingly.";
+      }
+      if (t.includes('soil') || t.includes('pH') || t.includes('மண்') || t.includes('மண்ணு')) {
+        return lang && lang.startsWith('ta') ? "மண்ணின் pH மதிப்பை சரிபார்க்கவும், தேவையான உரத்தைச் சேர்க்கவும்." : "Test soil pH and add required fertilizer amendments.";
+      }
+      if (t.includes('weather') || t.includes('வானிலை') ) {
+        return lang && lang.startsWith('ta') ? "காலநிலை கணிப்பை பின்பற்றி பாசனத்தை திட்டமிடுங்கள்." : "Follow the weather forecast and plan irrigation accordingly.";
+      }
+      if (t.includes('time') || t.includes('எப்போது')) {
+        return new Date().toLocaleString(lang || 'en-US', { hour: 'numeric', minute:'numeric', hour12:true });
+      }
+      return lang && lang.startsWith('ta') ? "மன்னிக்கவும், அதை புரிந்துகொள்ளவில்லை. மீண்டும் சொல்லுங்கள்." : "Sorry, I didn't understand. Can you rephrase?";
+    }
+
+    // ChatGPT call helper: POST to /api/chat (server must call OpenAI securely)
+    async function callChatGPT(prompt, lang) {
+      try {
+        const resp = await fetch('/api/chat', {
+          method:'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ prompt, lang })
+        });
+        if (!resp.ok) throw new Error('Server error');
+        const j = await resp.json();
+        return j.reply || j.output || '';
+      } catch (err) {
+        console.warn('ChatGPT call failed:', err);
+        throw err;
+      }
+    }
+
+    // top-level process: send user text and produce AI response (tries ChatGPT if enabled)
+    async function processUserText(text, lang) {
+      appendMessage(text, 'user');
+      if (useChatGPT && useChatGPT.checked) {
+        appendSystem('Contacting server for ChatGPT response...');
+        try {
+          const reply = await callChatGPT(text, lang);
+          appendMessage(reply, 'ai');
+          speak(reply, lang);
+          return;
+        } catch (err) {
+          appendSystem('ChatGPT server not available — using local fallback.');
+        }
+      }
+      const reply = localAssistantReply(text, lang);
+      appendMessage(reply, 'ai');
+      speak(reply, lang);
+    }
+
+    // UI actions
+    // Attach click handler to every start button (fixes duplicate id problem)
+    startBtns.forEach(btn => {
+      btn.addEventListener('click', ()=>{
+        if (!recognition) { appendSystem('SpeechRecognition not available'); return; }
+        recognition.lang = (voiceLang && voiceLang.value) ? voiceLang.value : 'ta-IN';
+        try {
+          recognition.start();
+          appendSystem('Listening...');
+        } catch(e){ console.warn(e); }
+      });
+    });
+
+    if (stopBtn) {
+      stopBtn.addEventListener('click', ()=>{
+        if (recognition) recognition.stop();
+        appendSystem('Stopped.');
+      });
+    }
+
+    if (clearConvBtn) {
+      clearConvBtn.addEventListener('click', ()=>{
+        conv.innerHTML = '';
+      });
+    }
+
+    // recognition events
+    if (recognition) {
+      recognition.addEventListener('result', (ev)=>{
+        const speechResult = ev.results[0][0].transcript;
+        processUserText(speechResult, (voiceLang && voiceLang.value) ? voiceLang.value : 'ta-IN');
+      });
+      recognition.addEventListener('end', ()=> {
+        // recognition ended (single-shot). user can press start again.
+        console.log('recognition ended');
+      });
+      recognition.addEventListener('error', (e)=>{
+        appendSystem('Recognition error: ' + (e.error||e.message||JSON.stringify(e)));
+      });
+    }
+
+    // typed input send
+    if (sendTextBtn) {
+      sendTextBtn.addEventListener('click', ()=> {
+        const t = typedInput.value.trim();
+        if (!t) return;
+        typedInput.value = '';
+        processUserText(t, (voiceLang && voiceLang.value) ? voiceLang.value : 'ta-IN');
+      });
+    }
+    if (typedInput) {
+      typedInput.addEventListener('keydown', (e)=>{
+        if (e.key === 'Enter') { e.preventDefault(); if (sendTextBtn) sendTextBtn.click(); }
+      });
+    }
+
+    // quick demo welcome message
+    appendSystem('AI assistant ready. Choose language, optionally check "Use ChatGPT" and press 🎙️ or type a question.');
+  })();
+</script>
+
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"e3c1c9af36de41759418005494a48906","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
